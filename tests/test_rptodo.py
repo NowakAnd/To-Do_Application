@@ -8,13 +8,20 @@ from rptodo import __app_name__, __version__, cli
 runner = CliRunner()
 
 
-def test_version_1():
+def test_version_1_positive():
     result = runner.invoke(cli.app, ["--version"])
     assert result.exit_code == 0
     assert f"{__app_name__} v{__version__}" in result.stdout
 
 
-def test_version_2():
+def test_version_2_positive():
     result = runner.invoke(cli.app, ["-v"])
     assert result.exit_code == 0
     assert f"{__app_name__} v{__version__}" in result.stdout
+
+
+def test_version_1_negative():
+    result = runner.invoke(cli.app, ["-ver"])
+    assert result.exit_code == 2
+    assert "Error: No such option:" in result.stdout
+
